@@ -1,0 +1,32 @@
+enablePodAntiAffinity: true
+
+resources: &ha_resources
+  cpu: &ha_resources_cpu
+    limit: ""
+    request: 100m
+  memory:
+    limit: 250Mi
+    request: 50Mi
+
+
+# tap configuration
+tap:
+  replicas: 3
+  resources: *ha_resources
+
+# web configuration
+dashboard:
+  resources: *ha_resources
+
+# prometheus configuration
+prometheusUrl: http://prometheus-operated.monitoring.svc.cluster.local:9090
+prometheus:
+  enabled: false
+
+
+grafana:
+  # -- url of an in-cluster Grafana instance with reverse proxy configured, used by the
+  # Linkerd viz web dashboard to provide direct links to specific Grafana
+  # dashboards. Cannot be set if grafana.externalUrl is set. See the [Linkerd
+  # documentation](https://linkerd.io/2/tasks/grafana) for more information
+  url: http://prometheus-grafana.monitoring.svc.cluster.local

@@ -1,0 +1,13 @@
+# proxy configuration
+proxy:
+  resources:
+    cpu:
+      # -- Maximum amount of CPU units that the proxy can use
+      limit: ""
+      # -- Amount of CPU units that the proxy requests
+      request: "0.001"
+    memory:
+      # -- Maximum amount of memory that the proxy can use
+      limit: ""
+      # -- Maximum amount of memory that the proxy requests
+      request: "16Mi"

@@ -1,0 +1,9 @@
+bases:
+  - github.com/stefanprodan/podinfo/kustomize?ref=6.4.0
+
+resources:
+  - frontend.yml
+  - ns.yml
+
+patchesStrategicMerge:
+  - patch.yml

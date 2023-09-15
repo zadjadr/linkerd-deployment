@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd-multicluster
+  namespace: linkerd-multicluster
+spec:
+  podSelector:
+    matchLabels:
+      component: linkerd-service-mirror
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd-gateway
+  namespace: linkerd-multicluster
+spec:
+  podSelector:
+    matchLabels:
+      app: linkerd-gateway
+  ingress:
+    - {}
+  egress:
+    - {}

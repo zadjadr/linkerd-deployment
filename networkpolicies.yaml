@@ -1,0 +1,71 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-proxy-injector
+  namespace: linkerd
+spec:
+  podSelector:
+    matchLabels:
+      linkerd.io/control-plane-component: proxy-injector
+  ingress:
+    - {}
+  egress:
+    - {}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-identity
+  namespace: linkerd
+spec:
+  podSelector:
+    matchLabels:
+      linkerd.io/control-plane-component: identity
+  ingress:
+    - {}
+  egress:
+    - {}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-destination
+  namespace: linkerd
+spec:
+  podSelector:
+    matchLabels:
+      linkerd.io/control-plane-component: destination
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd-components
+  namespace: linkerd
+spec:
+  podSelector:
+    matchLabels:
+      linkerd.io/control-plane-ns: linkerd
+  ingress:
+    - {}
+  egress:
+    - {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-linkerd-viz
+  namespace: linkerd-viz
+spec:
+  podSelector:
+    matchLabels:
+      linkerd.io/extension: viz
+  ingress:
+    - {}
+  egress:
+    - {}

@@ -1,0 +1,8 @@
+pgp_fingerprints:
+  zadjad.rezai@ioki.com: &zar ABBFA3444562383E493E67A9723B1F76AD5EE5CF
+
+creation_rules:
+    - path_regex: .*
+      key_groups:
+      - pgp:
+        - *zar
