@@ -23,7 +23,7 @@ if [ $# -lt 1 ]; then
   echo "Usage: $0 <context> [certificate-dir]"
   echo
   echo "  context:         Required. Name of the Kubernetes Context to use."
-  echo "  certificate-dir: Optional. Certificate directory of the root CA certificates. Default: tools/k8s/linkerd/certs"
+  echo "  certificate-dir: Optional. Certificate directory of the root CA certificates. Default: certs"
   echo "                   We assume that there is a 'trustanchor' and 'webhook' directory below the 'certificate-dir'"
   echo "                   and that both of them contain sops encrypted files 'root.asc.crt' and 'root.asc.key'."
   exit 1
@@ -76,13 +76,13 @@ kubectl create secret tls webhook-issuer-tls \
     --key="$certificate_dir/webhooks/root.key" \
     --namespace=linkerd-viz
 
-kubectl apply -f tools/k8s/linkerd/issuer.yaml
-kubectl apply -f tools/k8s/linkerd/networkpolicies.yaml
+kubectl apply -f issuer.yaml
+kubectl apply -f networkpolicies.yaml
 
 # Apply certificates and wait for them in different namespaces
 declare -A certificates=(
-  ["linkerd"]="tools/k8s/linkerd/certificates.yaml"
-  ["linkerd-viz"]="tools/k8s/linkerd/certificates-viz.yaml"
+  ["linkerd"]="certificates.yaml"
+  ["linkerd-viz"]="certificates-viz.yaml"
 )
 for namespace in "${!certificates[@]}"; do
   certs=$(kubectl apply -f "${certificates[$namespace]}" | grep -oE 'certificate\.cert-manager\.io/[a-zA-Z0-9-]+ created' | awk '{print $1}' | cut -d '/' -f 2)

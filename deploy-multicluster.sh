@@ -27,11 +27,11 @@ kubectl config use-context "$context"
 kubectl create ns linkerd-multicluster
 kubectl annotate namespace linkerd-multicluster linkerd.io/inject=enabled
 
-kubectl apply -f tools/k8s/linkerd/networkpolicies-multicluster.yaml
+kubectl apply -f networkpolicies-multicluster.yaml
 
 helm upgrade \
   --install linkerd-multicluster linkerd/linkerd-multicluster \
-  -f tools/k8s/linkerd/multicluster.yaml \
+  -f multicluster.yaml \
   -n linkerd-multicluster --create-namespace
 
 # The linkerd-gateway has issues on its first deployment

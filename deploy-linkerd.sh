@@ -10,7 +10,7 @@ if [ $# -lt 1 ]; then
   echo
   echo "  context:         Required. Name of the Kubernetes Context to use."
   echo "  non-masq-cidr:   Optional. Non-Masquerading CIDR of the Cluster. Default: 100.64.0.0/10"
-  echo "  certificate-dir: Optional. Certificate directory of the root CA certificates. Default: tools/k8s/linkerd/certs"
+  echo "  certificate-dir: Optional. Certificate directory of the root CA certificates. Default: certs"
   echo "                   We assume that there is a 'trustanchor' and 'webhook' directory below the 'certificate-dir'"
   echo "                   and that both of them contain sops encrypted files 'root.asc.crt' and 'root.asc.key'."
   exit 1
@@ -51,7 +51,7 @@ helm upgrade --install linkerd-control-plane \
   --set-file profileValidator.caBundle="$certificate_dir/webhooks/root.crt" \
   --set clusterNetworks="$non_masq_cidr" \
   --atomic \
-  -f tools/k8s/linkerd/values.yaml \
+  -f values.yaml \
   linkerd/linkerd-control-plane
 
 # Linkerd Viz
@@ -62,7 +62,7 @@ helm upgrade --install linkerd-viz \
   --set tapInjector.externalSecret=true \
   --set-file tapInjector.caBundle="$certificate_dir/webhooks/root.crt" \
   --atomic \
-  -f tools/k8s/linkerd/viz.yaml \
+  -f viz.yaml \
   linkerd/linkerd-viz
 
 # Remove the unencrypted secrets
